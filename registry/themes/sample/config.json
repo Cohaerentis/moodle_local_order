@@ -1,0 +1,183 @@
+{
+   // General description fields
+   "name"                     : "ORDER",
+   "shortname"                : "Local - Order", // Show in emails subject
+   "longname"                 : "Moodle Local Plugin - Order", // Show in emails body
+   "description"              : "Customizable registry pages and course orders management",
+
+   // Page resources
+   "css_external"             : "",
+   "css"                      : ["bootstrap.min", "main.min"],
+   "js_external"              : "",
+   "js"                       : ["jquery-1.10.2.min", "bootstrap.min", "main.min", "onload.min"],
+
+   // General page configuration
+   "brand"                    : "Aula Virtual TEACHNOVA", // Show in page header
+   "title_prefix"             : "Aula Virtual TEACHNOVA", // Show in page title
+   "lang"                     : ["es", "en"],
+   "logo"                     : "logo.png",
+   "logo_teachnova"           : "logo_teachnova.png",
+   "url"                      : "http://aula.teachnova.net/",
+   "url_teachnova"            : "http://www.teachnova.com",
+
+   // Logging
+   "signup_log_enabled"       : true,
+   "signup_log_file"          : "teachnova_signup_log.csv",
+
+   // Debug
+   "debug_enabled"            : true,
+
+   // Mailchimp
+   "mailchimp_enabled"        : false, // Enable when configured
+   "mailchimp_apikey"         : "XXX", // Your Mailchimp API Key
+   "mailchimp_list"           : "XXX", // Your Mailchimp contact list
+   "mailchimp_topic_field"    : "Tematica",
+   "mailchimp_type_field"     : "Tipo",
+   "mailchimp_type"           : "Estudiante",
+
+   // Google Analytics
+   "ga_id"                    : "UA-38488988-1",
+   "ga_domain"                : false,
+
+   // Signup fields
+   // Note that email, firstname and lastname are enabled and required by default
+   "field_username" : {
+      "enabled"     : false,
+      "required"    : false
+   },
+   "field_password" : {
+      "enabled"     : true,
+      "required"    : true,
+      "repassword"  : true
+   },
+   "field_repassword" : {
+      "enabled"     : true,
+      "required"    : true
+   },
+   "field_nif"      : {
+      "enabled"     : false,
+      "required"    : false
+   },
+   "field_institution" : {
+      "enabled"     : true,
+      "required"    : false
+   },
+   "field_position" : {
+      "enabled"     : true,
+      "required"    : false
+   },
+   "field_country" : {
+      "enabled"     : true,
+      "required"    : false,
+      "list"    : "all"
+   },
+   "field_city" : {
+      "enabled"     : true,
+      "required"    : false
+   },
+   "field_phone"    : {
+      "enabled"     : true,
+      "required"    : false
+   },
+   "field_phone_intcode" : {
+      "enabled"     : true,
+      "required"    : false
+   },
+   "field_privacy"  : {
+      "enabled"     : true,
+      "required"    : true
+   },
+
+   // User signup defaults
+   "maildisplay"                       : 2, // 0 - No, 1 - Yes, 2 - Only course partners
+
+   // Email confirmation to user signup
+   // Sent when user send his data first time, we need to confirm his email
+   "user_confirm_enabled"                     : true,
+   "user_confirm_hide_pass"                   : false,
+   "user_confirm_fromname"                    : "TEACHNOVA",
+   "user_confirm_fromemail"                   : "info@example.edu",
+
+   // User remember password notification
+   // Sent when user request help to remember his password
+   "user_rempasswd_fromname"                  : "TEACHNOVA",
+   "user_rempasswd_fromemail"                 : "info@example.edu",
+
+   // User signup confirmed notification
+   // Sent when user email is confirmed
+   "user_notify_signup_enabled"               : true,
+   "user_notify_signup_fromname"              : "TEACHNOVA",
+   "user_notify_signup_fromemail"             : "info@example.edu",
+
+   // User pending notification
+   // Sent when user has confirm an order an it is pending for validation (even free order)
+   "user_notify_pending_enabled"              : true,
+   "user_notify_pending_fromname"             : "TEACHNOVA",
+   "user_notify_pending_fromemail"            : "info@example.edu",
+
+   // User validate notification
+   // Sent when order is validated (even free order)
+   "user_notify_validate_enabled"             : true,
+   "user_notify_validate_fromname"            : "TEACHNOVA",
+   "user_notify_validate_fromemail"           : "info@example.edu",
+
+   // User cancel notification
+   // Sent when order is cancelled by user (not sent if order is cancelled by admin)
+   "user_notify_cancel_enabled"               : true,
+   "user_notify_cancel_fromname"              : "TEACHNOVA",
+   "user_notify_cancel_fromemail"             : "info@example.edu",
+
+   // Admin user signup notification
+   // Sent when user send his data first time, we need to confirm his email yet
+   "admin_notify_signup_enabled"              : true,
+   "admin_notify_signup_fromemail"            : "info@example.edu",
+
+   // Admin user confirmed notification
+   // Sent when user email is confirmed
+   "admin_notify_confirmed_enabled"           : true,
+   "admin_notify_confirmed_fromemail"         : "info@example.edu",
+
+   // Admin pending notification
+   // Sent when a new order is confirmed by user, then is pending of admin validation
+   "admin_notify_pending_enabled"             : true,
+   "admin_notify_pending_fromemail"           : "info@example.edu",
+
+   // Admin validate notification
+   // Sent when admin has just validated an order
+   "admin_notify_validate_enabled"            : true,
+   "admin_notify_validate_fromemail"          : "info@example.edu",
+
+   // Admin cancel notification
+   // Sent when user/admin has just cancelled an order
+   "admin_notify_cancel_enabled"              : true,
+   "admin_notify_cancel_fromemail"            : "info@example.edu",
+
+   // Paypal options
+   "paypal_enabled"              : true,
+   "paypal_account"              : "info@example.edu",
+   // "paypal_backend"              : "www.paypal.com",
+   "paypal_backend"              : "www.sandbox.paypal.com",
+   "paypal_order_prefix"         : "PAYPAL",
+
+   // Banktransfer options
+   "transfer_enabled"            : true,
+   "transfer_order_prefix"       : "TRF",
+   "transfer_concept_field"      : "realname",
+   "transfer_bank"               : "My favorite Bank",
+   "transfer_bank_swift"         : "FAVBANK",
+   "transfer_bank_aba"           : "",
+   "transfer_bank_address"       : "Gran vía, 32<br>Madrid,<br>España, 28001",
+   "transfer_payee_account"      : "1234567890",
+   "transfer_payee_name"         : "My organization",
+   "transfer_payee_address"      : "Mr. Contable Jones<br>My organization<br>Gran vía, 32<br>Madrid,<br>España, 28001",
+   "transfer_email"              : "info@example.edu",
+
+   // Western Union options
+   "western_enabled"             : true,
+   "western_order_prefix"        : "WSTRN",
+   "western_concept_field"       : "realname",
+   "western_payee_name"          : "Mr. Contable Jones",
+   "western_payee_address"       : "My organization<br>Gran vía, 32<br>Madrid,<br>España, 28001",
+   "western_email"               : "info@example.edu"
+
+}

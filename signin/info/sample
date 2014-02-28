@@ -1,0 +1,10 @@
+<html>
+<head>
+   <title>Sample info page</title>
+</head>
+<body>
+<h1>Sample info page</h1>
+<p>This is a static info web page for registry landing pages</p>
+<p>For more info about customizing this : <a href="#">Moodle 2.x Plugin Order Help</a></p>
+</body>
+</html>

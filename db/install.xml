@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/order/db" VERSION="20130825" COMMENT="XMLDB file for Moodle local/order"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_order" COMMENT="Orders" NEXT="local_order_item">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="User that created this order" PREVIOUS="id" NEXT="registryid"/>
+        <FIELD NAME="registryid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Registry page that created this order" PREVIOUS="userid" NEXT="cohortid"/>
+        <FIELD NAME="cohortid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Cohort ID associated to this order, when validated user will be added to this cohort" PREVIOUS="registryid" NEXT="uniqueid"/>
+        <FIELD NAME="uniqueid" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" COMMENT="Order unique ID" PREVIOUS="cohortid" NEXT="createdate"/>
+        <FIELD NAME="createdate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Order created date" PREVIOUS="uniqueid" NEXT="modifydate"/>
+        <FIELD NAME="modifydate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Order last status modification date" PREVIOUS="createdate" NEXT="paymode"/>
+        <FIELD NAME="paymode" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Order pay mode, codes: 0 = No paymode, free order | 1 = Paypal | 2 = CreditCard | 3 = BankTransfer | 4 = WesternUnion" PREVIOUS="modifydate" NEXT="promotional"/>
+        <FIELD NAME="promotional" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" COMMENT="Order promotional code applied" PREVIOUS="paymode" NEXT="currency"/>
+        <FIELD NAME="currency" TYPE="char" LENGTH="3" NOTNULL="false" DEFAULT="EUR" SEQUENCE="false" COMMENT="Order currency, compliance to ISO 4217 currency names" PREVIOUS="promotional" NEXT="cost"/>
+        <FIELD NAME="cost" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" DECIMALS="3" COMMENT="Order initial cost" PREVIOUS="currency" NEXT="finalcost"/>
+        <FIELD NAME="finalcost" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" DECIMALS="3" COMMENT="Order final cost, promotional and extra items cost applied" PREVIOUS="cost" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Order Status, codes: 0 = Unknown | 1 = Created | 2 = Prepared, not confirmed by user | 3 = Pending, user must pay an admin validate | 4 = Paid, payment validated by admin | 5 = Cancelled, by user or admin" PREVIOUS="finalcost" NEXT="metadata"/>
+        <FIELD NAME="metadata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Metadata to extend default behavior. JSON encoded, encode/decoded by themes" PREVIOUS="status"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="local_order_userid_status" UNIQUE="false" FIELDS="userid, status" NEXT="local_order_status"/>
+        <INDEX NAME="local_order_status" UNIQUE="false" FIELDS="status" PREVIOUS="local_order_userid_status"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_order_item" COMMENT="Order items" PREVIOUS="local_order" NEXT="local_order_registry">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="orderid"/>
+        <FIELD NAME="orderid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Order ID associated with this item" PREVIOUS="id" NEXT="itemtype"/>
+        <FIELD NAME="itemtype" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Type of item. A code word for encode/decode metadata" PREVIOUS="orderid" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Shortname to describe this item" PREVIOUS="itemtype" NEXT="description"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Extended description of item" PREVIOUS="name" NEXT="cost"/>
+        <FIELD NAME="cost" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" DECIMALS="3" COMMENT="Item cost" PREVIOUS="description" NEXT="metadata"/>
+        <FIELD NAME="metadata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Metadata to extend default behavior. JSON encoded, encode/decoded by themes" PREVIOUS="cost"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="local_order_item_orderid" UNIQUE="false" FIELDS="orderid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_order_registry" COMMENT="Registry pages" PREVIOUS="local_order_item">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="cohortid"/>
+        <FIELD NAME="cohortid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Cohort ID associated to this registry page. Order created will be associated to this cohort too" PREVIOUS="id" NEXT="theme"/>
+        <FIELD NAME="theme" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" COMMENT="Theme to use. Directory name in &quot;themes&quot; folder" PREVIOUS="cohortid" NEXT="slug"/>
+        <FIELD NAME="slug" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Slug" PREVIOUS="theme" NEXT="metadata"/>
+        <FIELD NAME="metadata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Registry page config. JSON encoded, decode/encode by themes" PREVIOUS="slug" NEXT="status"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Registry page Status, codes: 0 = Disabled | 1 = Enabled | 2 = Deleted" PREVIOUS="metadata"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="local_order_registry_slug_status" UNIQUE="true" FIELDS="slug, status" NEXT="local_order_registry_status"/>
+        <INDEX NAME="local_order_registry_status" UNIQUE="false" FIELDS="status" PREVIOUS="local_order_registry_slug_status"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

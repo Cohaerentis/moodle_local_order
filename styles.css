@@ -1,0 +1,65 @@
+#local_order .orderlist,
+#local_order .registrypagelist {
+    margin: 0px 2px;
+    width: 99%;
+}
+
+#local_order .orderlist,
+#local_order .registrypagelist,
+#local_order .generaltable .cell {
+    font-size: 0.9em;
+}
+#local_order #order-details table,
+#local_order #order-items table {
+    width: 100%;
+}
+
+#local_order #order-items table td.total-value,
+#local_order #order-details table td.label {
+    width: 20%;
+}
+
+#local_order #order-items table {
+    text-align: left;
+}
+
+#local_order #order-actions,
+#local_order #order-items table th {
+    text-align: center;
+}
+
+#local_order #order-items table td.total-label,
+#local_order #order-items table td.total-value,
+#local_order #order-items table td.item-cost {
+    text-align: right;
+}
+
+
+#local_order #order-details table tr,
+#local_order #order-items table tr {
+    border: solid 1px #d8d8d8;
+}
+
+
+#local_order #order-details table td.label,
+#local_order #order-items table th,
+#local_order #order-items table td.total-label,
+#local_order #order-items table td.total-value {
+    background: #d8d8d8;
+    font-weight: bold;
+}
+
+#local_order form.filter label {
+    width: 200px;
+    float: left;
+}
+
+#local_order .addlink {
+    display: block;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+    margin: auto;
+    border: 1px solid #aaa;
+    background-color: #eee
+}
